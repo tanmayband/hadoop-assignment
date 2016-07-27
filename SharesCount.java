@@ -20,21 +20,13 @@ public class SharesCount {
         private IntWritable num = new IntWritable();
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            System.out.println("---" + value.toString());
             String[] record = value.toString().split("\\|");
-            /*
-            for (String s : record) {
-                System.out.print(s + " ");
-            }
-            System.out.println();
-            */
             word.set(record[1]);
             try {
                 num.set(Integer.parseInt(record[2]));
             } catch (NumberFormatException e) {
                 return;
             }
-            System.out.println("<" + word.toString() + ", " + num.toString() + ">");
             context.write(word, num);
         }
     }
@@ -48,7 +40,6 @@ public class SharesCount {
                 count += val.get();
             }
             result.set(count);
-            System.out.println("<" + key.toString() + ", " + result.toString() + ">");
             context.write(key, result);
         }
     }
