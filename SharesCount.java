@@ -22,7 +22,12 @@ public class SharesCount {
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] record = value.toString().split("|");
             word.set(record[1]);
-            num.set(Integer.parseInt(record[2]));
+            try {
+                num.set(Integer.parseInt(record[2]));
+            } catch (NumberFormatException e) {
+                return;
+            }
+            System.out.println("<" + word.toString() + ", " + num.toString() + ">");
             context.write(word, num);
         }
     }
@@ -36,6 +41,7 @@ public class SharesCount {
                 count += val.get();
             }
             result.set(count);
+            SYstem.out.println("<" + key.toString() + ", " + result.toString() + ">");
             context.write(key, result);
         }
     }
