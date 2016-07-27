@@ -20,7 +20,14 @@ public class SharesCount {
         private IntWritable num = new IntWritable();
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
-            String[] record = value.toString().split("|");
+            System.out.println("---" + value.toString());
+            String[] record = value.toString().split("\\|");
+            /*
+            for (String s : record) {
+                System.out.print(s + " ");
+            }
+            System.out.println();
+            */
             word.set(record[1]);
             try {
                 num.set(Integer.parseInt(record[2]));
