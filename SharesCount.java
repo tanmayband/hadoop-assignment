@@ -41,7 +41,7 @@ public class SharesCount {
                 count += val.get();
             }
             result.set(count);
-            SYstem.out.println("<" + key.toString() + ", " + result.toString() + ">");
+            System.out.println("<" + key.toString() + ", " + result.toString() + ">");
             context.write(key, result);
         }
     }
