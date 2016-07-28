@@ -1,5 +1,10 @@
-import java.io.IOException;
+/**
+ * Author: Abhijeet Krishnan
+ * Enroll. No.: BT13CSE001
+ * Software Lab III - Assignment 1 - Question 3
+ */
 
+import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,8 +19,6 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class ListensCount {
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
-	
-        private final static IntWritable ONE = new IntWritable(1);
         private Text word = new Text();
         private IntWritable num = new IntWritable();
 
@@ -47,10 +50,10 @@ public class ListensCount {
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
         Job job = Job.getInstance(conf, "listens count");
-        job.setJarByClass(SharesCount.class);
+        job.setJarByClass(ListensCount.class);
         job.setMapperClass(TokenizerMapper.class);
         job.setCombinerClass(IntListensReducer.class);
-        job.setReducerClass(IntSharesReducer.class);
+        job.setReducerClass(IntListensReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));

@@ -1,5 +1,10 @@
-import java.io.IOException;
+/**
+ * Author: Abhijeet Krishnan
+ * Enroll. No.: BT13CSE001
+ * Software Lab III - Assignment 1 - Question 2
+ */
 
+import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -15,7 +20,6 @@ public class SharesCount {
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
 	
-        private final static IntWritable ONE = new IntWritable(1);
         private Text word = new Text();
         private IntWritable num = new IntWritable();
 

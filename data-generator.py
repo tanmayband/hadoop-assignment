@@ -3,9 +3,8 @@
 """
 A script to generate the data file as required
 by the assignment. The data file generated is
-named 'log.txt', and overwrites any existing
-file. A command line parameter can be passed
-stating the number of records to be generated.
+named 'log.txt' default, and overwrites any
+existing file.
 """
 
 import random
@@ -22,6 +21,7 @@ parser.add_argument("--luid", type=int, help="left range of UserId",   default=1
 parser.add_argument("--ruid", type=int, help="right range of UserId",  default=1000000)
 parser.add_argument("--ltid", type=int, help="left range of TrackId",  default=100)
 parser.add_argument("--rtid", type=int, help="right range of TrackId", default=1000)
+parser.add_argument("-o", "--output", type=str, help="name of output file", default="log.txt")
 args = parser.parse_args()
 
 if args.luid >= args.ruid:
@@ -37,7 +37,7 @@ elif not 100 <= args.ltid <= 999:
 elif not 101 <= args.rtid <= 1000:
     parser.error("right range of TrackId must be within range [101, 1000]")
 
-fp = open('log.txt', 'w')
+fp = open(args.output, 'w')
 
 fp.write('UserId|TrackId|Shared|Radio|Skip\n') # print header
 

@@ -1,5 +1,10 @@
-import java.io.IOException;
+/**
+ * Author: Abhijeet Krishnan
+ * Enroll. No.: BT13CSE001
+ * Software Lab III - Assignment 1 - Question 4
+ */
 
+import java.io.IOException;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,20 +19,16 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class TotalCount {
 
 	public static class TokenizerMapper extends Mapper<Object, Text, Text, IntWritable> {
-	
-        private final static IntWritable ONE = new IntWritable(1);
         private Text word = new Text();
         private IntWritable num = new IntWritable();
 
         public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
             String[] record = value.toString().split("\\|");
-            word.set(record[1]);
-            try {
+            if (record[3].equals("1") && record[4].equals("0")) {
+                word.set(record[1]);
                 num.set(Integer.parseInt(record[4]));
-            } catch (NumberFormatException e) {
-                return;
+                context.write(word, num);
             }
-            context.write(word, num);
         }
     }
 
@@ -46,11 +47,11 @@ public class TotalCount {
 
     public static void main(String[] args) throws Exception {
         Configuration conf = new Configuration();
-        Job job = Job.getInstance(conf, "skips count");
-        job.setJarByClass(SharesCount.class);
+        Job job = Job.getInstance(conf, "total count");
+        job.setJarByClass(TotalCount.class);
         job.setMapperClass(TokenizerMapper.class);
-        job.setCombinerClass(IntSkipsReducer.class);
-        job.setReducerClass(IntSharesReducer.class);
+        job.setCombinerClass(IntCountReducer.class);
+        job.setReducerClass(IntCountReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(IntWritable.class);
         FileInputFormat.addInputPath(job, new Path(args[0]));
