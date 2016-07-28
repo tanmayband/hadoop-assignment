@@ -53,7 +53,6 @@ for i in range(args.records):
 
     ## Generate Shared
     # Shared is either '0' or '1'
-    # Can a track be shared if skipped? Yes
     shared = random.choice([0, 1])
 
     ## Generate Radio
@@ -62,8 +61,7 @@ for i in range(args.records):
 
     # Generate Skip
     # Skip is either '0' or '1'
-    # Can a track be skipped if not listened to i.e. radio = 1? No
-    skip = random.choice([0, 1])
+    skip = random.choice([0, 1]) if radio == 1 else 0
 
     fp.write('%d|%d|%d|%d|%d\n' % (user_id, track_id, shared, radio, skip))
 
